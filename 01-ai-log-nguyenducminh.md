@@ -12,8 +12,8 @@ Dùng **4 Lenses** quét qua vận hành của các công ty thành viên Vingro
 
 | # | Subsidiary | Lens | Mô tả ngắn bài toán |
 |---|------------|------|---------------------|
-| 1 | | Lặp lại | Nhiều dòng xe điện có cấu trúc và linh kiện tương đồng nhưng QA team vẫn phải thực hiện full regression testing cho từng model mới.|
-| 2 |  | Lặp lại | QQA/QC và các phòng ban liên quan vẫn phụ thuộc vào quy trình giấy tờ thủ công như in tài liệu, xin ký xác nhận và đóng dấu qua nhiều cấp phê duyệt. |
+| 1 | Vinfast | Lặp lại | Nhiều dòng xe điện có cấu trúc và linh kiện tương đồng nhưng QA team vẫn phải thực hiện full regression testing cho từng model mới.|
+| 2 |  | Lặp lại | QA/QC và các phòng ban liên quan vẫn phụ thuộc vào quy trình giấy tờ thủ công như in tài liệu, xin ký xác nhận và đóng dấu qua nhiều cấp phê duyệt. |
 |3| |AI-upgrade| Dữ liệu kiểm thử xe hiện được lưu rời rạc giữa nhiều hệ thống và đội vận hành, chưa có AI hỗ trợ phân tích lỗi, gợi ý test case hoặc tái sử dụng tri thức kiểm thử.
 |4| |Tốn thời gian| Kỹ sư kiểm thử phải manually đối chiếu log lỗi, lịch sử kiểm thử và tài liệu kỹ thuật từ nhiều nguồn trước khi xác định nguyên nhân sự cố.
 | 5 |  | Pain từ người khác | QA team (QA Engineer, PM tester...) phải mang nhiều giấy tờ để kiểm thử.|

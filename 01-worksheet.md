@@ -69,106 +69,97 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 | 4 | **Vinfast** | AI-upgrade | Dữ liệu kiểm thử xe hiện được lưu rời rạc giữa nhiều hệ thống và đội vận hành, chưa có AI hỗ trợ phân tích lỗi, gợi ý test case hoặc tái sử dụng tri thức kiểm thử |
 | 5| **Vinfast** | Tốn thời gian | Tóm tắt lý do khách hàng hủy chuyến từ cuộc gọi ghi âm và ghi chú của tài xế để tìm pattern lỗi hệ thống |
 
-
 ---
 
 # 🃏 Phase 2 — QUICK-ASSESS (Cá nhân, 30 min)
 
 Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** dưới đây (10 phút/card).
-
----
-
-## 🃏 QUICK PROBLEM CARD #1: Phân Loại & Route Yêu Cầu Support Khách Du Lịch Vinpearl
-
-**Bài toán (1 câu):** Tự động phân loại, ưu tiên, và route các yêu cầu support khách hàng từ chat/call/email đến team phù hợp (Đặt vé, Hoàn tiền, IT, Phàn nàn).
-
-**Công ty thành viên:** [X] Vinpearl  [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  [ ] Vinmec
-
-**Ai đang đau (Actor)?** 
-Nhân viên Support Center Vinpearl (15-20 người) xử lý 200-300 yêu cầu/ngày trên 4 kênh (email, chat app, phone, Facebook). Hiện tại phải đọc từng yêu cầu để gán team thủ công, gây chậm trễ 1-2 tiếng trước khi khách được phục vụ.
-
-**Workflow thủ công hiện tại (3-5 bước):**
-1. Yêu cầu đến qua chat/email/phone
-2. Support đọc, viết ghi chú, xác định category (Đặt vé/Hoàn tiền/Lỗi website/Phàn nàn)
-3. Support gán thủ công cho team phù hợp (Booking team/Finance/IT/Management)
-4. Team khác nhận ticket, chuẩn bị reply
-5. Phản hồi được gửi lại khách (mất 2-3 tiếng từ bước 1 ➜ 5)
-
-**Bước nào tốn thời gian/lỗi nhất?** 
-Bước 2-3: Phân loại & gán team. Sai loại ➜ route sai team ➜ chuyển tiếp 1-2 lần ➜ phản hồi muộn. (⏱ 5-10 phút/yêu cầu × 250 yêu cầu/ngày = 1250-2500 phút/ngày = 20+ giờ/ngày)
-
-**AI có thể nhảy vào hỗ trợ ở bước nào?**
-Bước 2-3: Sử dụng LLM đọc nội dung yêu cầu → phát hiện intent (đặt vé, hoàn tiền, lỗi, khiếu nại) → gợi ý category + team. Hỗ trợ nhân viên review 1 giây, nhấn "Confirm" ➜ auto-route.
-
-**Đo thành công bằng gì (Metric có số)?**
-1. Giảm thời gian phân loại từ 5-10 min ➜ **dưới 30 giây** (LLM + human review)
-2. Độ chính xác phân loại ≥ **92%** (hạn chế re-routing)
-3. Giảm SLA từ 2-3 tiếng ➜ **< 45 phút** từ khi nhận yêu cầu đến lần reply đầu
-
-**Quick Architecture:** [ ] No AI  [ ] Rule  [X] LLM  [ ] Agent
-
----
-
-## 🃏 QUICK PROBLEM CARD #2: Tối Ưu Phân Công Bảo Trì Cư Dân Vinhomes
-
-**Bài toán (1 câu):** Tự động phân công yêu cầu sửa chữa/bảo trì tới thợ phù hợp dựa trên loại sự cố, vị trí, và kỹ năng, thay vì để coordinator xử lý thủ công và khách phải chờ 3-5 ngày.
-
-**Công ty thành viên:** [ ] VinFast  [ ] Xanh SM  [X] Vinhomes  [ ] Vinmec  [ ] Vinpearl
-
-**Ai đang đau (Actor)?**
-Cư dân sống tại Vinhomes phàn nàn về độ chậm: yêu cầu sửa điều hòa/ống nước/điện = chờ 3-5 ngày mới có thợ. Coordinator Vinhomes (8 người) phải gọi điện kiểm tra thợ, lịch làm việc, kỹ năng ➜ bottleneck lớn.
-
-**Workflow thủ công hiện tại (3-5 bước):**
-1. Cư dân gửi yêu cầu qua app Vinhomes Resident: "Điều hòa phòng ngủ không lạnh, block X2-10"
-2. System tạo ticket, coordinator nhận
-3. Coordinator gọi/SMS 5-10 thợ để kiểm tra: kỹ năng, lịch rảnh, khoảng cách từ vị trí hiện tại
-4. Thợ xác nhận ngày giờ (thường là +2-3 ngày vì bận)
-5. Cư dân được thông báo lịch hẹn qua app
-
-**Bước nào tốn thời gian/lỗi nhất?**
-Bước 3-4: Coordinator liên lạc thợ (lặp lại 3-5 lần/yêu cầu, mỗi lần 15-20 phút). Thợ thường bận ➜ phải chờ. (⏱ 45-90 phút/yêu cầu × 40 yêu cầu/ngày = 30-60 giờ/ngày coordinator chỉ gọi điện)
-
-**AI có thể nhảy vào hỗ trợ ở bước nào?**
-Bước 3-4: Sau khi cư dân gửi yêu cầu, system phân tích loại sự cố (NLP trích xuất "điều hòa", "block X2-10") → query database thợ lân cận có kỹ năng ➜ tự động gửi notification tới thợ, match lịch online. Human chỉ review & xác nhận.
-
-**Đo thành công bằng gì (Metric có số)?**
-1. Giảm thời gian phân công từ 45-90 min ➜ **< 5 phút** (LLM matching + tự động notification)
-2. Tỉ lệ match thợ lần đầu ≥ **85%** (tránh thợ từ chối vì sai kỹ năng/lịch)
-3. Giảm SLA từ 3-5 ngày ➜ **< 24 giờ** từ khi cư dân yêu cầu đến khi được lên lịch
-
-**Quick Architecture:** [ ] No AI  [ ] Rule  [X] LLM  [ ] Agent
-
----
-
-## 🃏 QUICK PROBLEM CARD #3: Tự Động Xử Lý Khiếu Nại Bảo Hành VinFast
-
-**Bài toán (1 câu):** Sử dụng AI để phân loại, phân tích bằng chứng (ảnh, video, giấy tờ) và đưa ra quyết định bảo hành tự động, thay vì nhân viên QA phải xem từng case 45 phút.
-
-**Công ty thành viên:** [X] VinFast  [ ] Xanh SM  [ ] Vinhomes  [ ] Vinmec  [ ] Vinpearl
-
-**Ai đang đau (Actor)?**
-Nhân viên QA (Quality Assurance) bộ phận Warranty VinFast phải review từng khiếu nại bảo hành: kiểm tra video xe gặp sự cố, so sánh với tiêu chuẩn công ty, phân loại (lỗi xe/lỗi khách/lỗi do bên thứ ba) ➜ thực hiện phức tạp, mỏi mắt, mất 45 phút/case × 50 case/ngày = 37.5 giờ/ngày.
-
-**Workflow thủ công hiện tại (3-5 bước):**
-1. Khách hàng gửi khiếu nại (email + 2-3 video/ảnh + giấy tờ hóa đơn)
-2. QA staff nhận, xem video chi tiết (5-10 phút)
-3. QA so sánh với tiêu chuẩn bảo hành: "Cáp cao áp có dây gãy = bảo hành được/không được" 
-4. QA ghi nhận kết luận (Approved/Rejected/Need more info) + lý do viết 3-4 dòng
-5. Gửi decision lại cho khách qua email
-
-**Bước nào tốn thời gian/lỗi nhất?**
-Bước 2-3: QA xem video + phân tích. Lỗi hay xảy ra vì QA xem nhanh, bỏ chi tiết hoặc áp dụng tiêu chuẩn không nhất quán. (⏱ 30-45 phút/case)
-
-**AI có thể nhảy vào hỗ trợ ở bước nào?**
-Bước 2-4: Sử dụng vision LLM (gemini-2.5-pro) để: (1) phân tích video/ảnh tìm vị trí lỗi, (2) phân loại loại sự cố (cáp, pin, khung gầm, electronics), (3) so sánh với warranty policy database ➜ gợi ý "Approve" hoặc "Reject" với confidence score. QA chỉ review & click "Confirm".
-
-**Đo thành công bằng gì (Metric có số)?**
-1. Giảm thời gian xử lý từ 45 min ➜ **3-5 phút** (AI analyze + human review)
-2. Độ chính xác decision ≥ **90%** so với tiêu chuẩn warranty (validate qua 100 case sample)
-3. Giảm SLA từ 7 ngày ➜ **1-2 ngày** khách nhận decision
-4. Nhân viên QA giải phóng 30+ giờ/tuần để xử lý case phức tạp hoặc training
-
-**Quick Architecture:** [ ] No AI  [ ] Rule  [ ] LLM  [X] Agent (LLM + policy database lookup + human review loop)
+```
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #1                                       │
+│                                                             │
+│ Bài toán: Quy trình kiểm thử xe điện VinFast lãng phí nguồn │
+│ lực do phải lặp lại các bài test thủ công cho những module/ │
+│ phần cứng dùng chung giữa các dòng xe.                      │
+│ Công ty thành viên: [x] VinFast                             │
+│                                                             │
+│ Ai đang đau? Kỹ sư QA/Tester (quá tải), Validation Team     │
+│                                                             │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Nhận model xe mới, QA lên kế hoạch chạy bộ test        │
+│   → 2. Đọc đối chiếu thủ công tài liệu kỹ thuật giữa 2 xe   │
+│   → 3. Chạy full regression testing cả các module tương đồng│
+│   → 4. Tổng hợp, review và báo cáo kết quả hoàn toàn bằng tay│
+│                                                             │
+│ Bước nào tốn nhất? Bước 2-3 (⏱ 40-50 giờ/kỳ release)        │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2-3              │
+│ (Tự động phân tích similarity tài liệu -> Gợi ý tái sử dụng │
+│  test case -> Khoanh vùng ưu tiên test để giảm rủi ro)      │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│ Giảm 30% số lượng test case lặp lại thừa thãi. Rút ngắn thời│
+│ gian regression testing từ 2 tuần ──> dưới 1 tuần/model.    │
+│                                                             │
+│ Quick Architecture: [x] LLM Feature (Phân tích & Gợi ý)     │
+└─────────────────────────────────────────────────────────────┘
+```
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #2                                       │
+│                                                             │
+│ Bài toán: Tối ưu hóa khâu phân tích sự cố và điều phối thợ  │
+│ bảo trì nhằm giải quyết tình trạng cư dân chờ đợi 3-5 ngày. │
+│ Công ty thành viên: [x] Vinhomes                            │
+│                                                             │
+│ Ai đang đau? Cư dân (bức xúc chờ đợi), Điều phối (quá tải)  │
+│                                                             │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Cư dân báo lỗi sự cố (điện, nước, điều hòa...) qua App │
+│   → 2. Điều phối viên đọc mô tả để xác định loại chuyên môn │
+│   → 3. Lật mở bảng Excel/hệ thống để dò tìm lịch rảnh và vị │
+│        trí của từng thợ để khớp việc thủ công               │
+│   → 4. Gắn việc cho thợ và thông báo lại lịch cho cư dân    │
+│                                                             │
+│ Bước nào tốn nhất? Bước 2-3 (⏱ 15 phút/lượt, gây tắc nghẽn│
+│ dẫn đến backlog tồn đọng kéo dài 3-5 ngày)                  │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2-3              │
+│ (LLM đọc hiểu text/ảnh lỗi -> Query database để tìm thợ phù │
+│  hợp chuyên môn & lịch rảnh -> Tự động gợi ý ghép cặp)      │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│ Xóa bỏ backlog chờ điều phối từ 3-5 ngày ──> dưới 2 giờ.    │
+│ Rút ngắn thời gian gán việc thủ công xuống < 2 phút/ticket. │
+│                                                             │
+│ Quick Architecture: [x] LLM Feature (Đọc lỗi & Gợi ý thợ)   │
+└─────────────────────────────────────────────────────────────┘
+```
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                                       │
+│                                                             │
+│ Bài toán: Ách tắc quy trình xét duyệt bảo hành do kỹ thuật  │
+│ viên phải đối chiếu thủ công ảnh/video với cẩm nang công ty.│
+│ Công ty thành viên: [x] VinFast                             │
+│                                                             │
+│ Ai đang đau? Kỹ thuật viên (quá tải), Khách hàng (chờ đợi)  │
+│                                                             │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Nhận đơn khiếu nại bảo hành kèm file ảnh, video, giấy  │
+│      tờ từ khách hàng hoặc xưởng dịch vụ                    │
+│   → 2. Kỹ thuật viên mở xem từng ảnh/video bằng mắt thường  │
+│   → 3. Lật tìm cẩm nang tiêu chuẩn bảo hành để đối chiếu xem│
+│        lỗi này thuộc diện được bảo hành hay do người dùng   │
+│   → 4. Viết báo cáo đánh giá và ra quyết định phê duyệt     │
+│                                                             │
+│ Bước nào tốn nhất? Bước 2-3 (⏱ 45 phút/case)              │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2-3              │
+│ (Vision-LLM phân tích ảnh/video lỗi -> RAG truy xuất chéo   │
+│  với cẩm nang bảo hành -> Draft báo cáo đối chiếu sơ bộ)    │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│ Giảm thời gian kiểm tra và đối chiếu từ 45 phút ──> dưới 10 │
+│ phút/case. Không có ca khiếu nại nào bị vượt quá hạn SLA.   │
+│                                                             │
+│ Quick Architecture: [x] LLM Feature (Vision-LLM & RAG)      │
+└─────────────────────────────────────────────────────────────┘
 
 ---
 
