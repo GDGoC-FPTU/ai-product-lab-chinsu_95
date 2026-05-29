@@ -63,11 +63,12 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary | Lens | Mô tả ngắn bài toán |
 |---|------------|------|---------------------|
-| 1 | **Vinpearl** | Lặp lại | Phân loại yêu cầu hỗ trợ khách du lịch (đặt vé, hoàn tiền, lỗi kỹ thuật, phàn nàn) từ chat/phone hằng ngày. |
-| 2 | **Vinhomes** | Pain từ người khác | Cư dân phàn nàn về thời gian chờ sửa chữa: yêu cầu bảo trì mất 3-5 ngày để được phân công thợ phù hợp. |
-| 3 | **VinFast** | Tốn thời gian | Xử lý đơn khiếu nại bảo hành: so sánh video, ảnh, giấy tờ khách hàng với tiêu chuẩn công ty (mất 45 phút/case). |
-| 4 | **Xanh SM** | AI-upgrade | Phát hiện tài xế mệt mỏi hoặc lái xe nguy hiểm qua dữ liệu GPS, tốc độ, hành vi phanh. |
-| 5 | **Vinmec** | Tốn thời gian | Soạn đơn chỉ định xét nghiệm cho bệnh nhân dựa trên triệu chứng và hóa đơn (10-15 phút/đơn, 200+ đơn/ngày). |
+| 1 | **Vinfast** | Lặp lại | Nhiều dòng xe điện có cấu trúc và linh kiện tương đồng nhưng QA team vẫn phải thực hiện full regression testing cho từng model mới |
+| 2 | **Vinhomes** | Pain từ người khác (Stakeholder Pain) | Cư dân vô cùng bức xúc vì các yêu cầu sự cố phải chờ tới 3-5 ngày mới có thợ xử lý. Điểm nghẽn nằm ở khâu điều phối: ban quản lý phải dò tìm, khớp lịch rảnh và chuyên môn của từng thợ với mô tả lỗi của cư dân hoàn toàn thủ công. |
+| 3 | **VinFast** | Tốn thời gian | Xử lý đơn khiếu nại bảo hành: so sánh video, ảnh, giấy tờ khách hàng với tiêu chuẩn công ty (mất 45 phút/case) |
+| 4 | **Vinfast** | AI-upgrade | Dữ liệu kiểm thử xe hiện được lưu rời rạc giữa nhiều hệ thống và đội vận hành, chưa có AI hỗ trợ phân tích lỗi, gợi ý test case hoặc tái sử dụng tri thức kiểm thử |
+| 5| **Vinfast** | Tốn thời gian | Tóm tắt lý do khách hàng hủy chuyến từ cuộc gọi ghi âm và ghi chú của tài xế để tìm pattern lỗi hệ thống |
+
 
 ---
 
